@@ -1,6 +1,6 @@
 
 
-public class Aula1 {
+public class Aula1_revisão {
     public static void main(String[] args) {
     // Declarando variaveis
     String name = "Marta";

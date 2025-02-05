@@ -1,4 +1,4 @@
-public class Aula2 {
+public class Aula2_revisão {
     
     public static void main(String[] args) {
         // Declarando variaveis

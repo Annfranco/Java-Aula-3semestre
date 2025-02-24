@@ -70,8 +70,12 @@ public class Funcionario {
 
     @Override
     public String toString() {
-        return "Funcionario [codigoDoFuncionario=" + codigoDoFuncionario + ", nome=" + nome + ", endereco=" + endereco
-                + ", telefone=" + telefone + ", email=" + email + ", conta=" + conta;
+        return "Código: " + codigoDoFuncionario + 
+               "\nNome: " + nome + 
+               "\nEndereco: " + endereco + 
+               "\nTelefone: " + telefone + 
+               "\nEmail: " + email + 
+               "\nConta Báncaria:" + conta;
     }
 
 }

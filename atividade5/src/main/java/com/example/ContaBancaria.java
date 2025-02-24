@@ -70,9 +70,12 @@ public class ContaBancaria {
 
     @Override
     public String toString() {
-        return "ContaBancaria [banco=" + banco + ", agencia=" + agencia + ", numeroDaConta=" + numeroDaConta
-                + ", tipoDaConta=" + tipoDaConta + ", saldoAtual=" + saldoAtual + ", limiteDisponivel="
-                + limiteDisponivel;
+        return "\nBanco: " + banco + 
+               "\nAgencia: " + agencia + 
+               "\nNúmero Da Conta: " + numeroDaConta + 
+               "\nTipo Da Conta: " + tipoDaConta + 
+               "\nSaldo Atual: " + saldoAtual + 
+               "\nLimite Disponivel: " + limiteDisponivel;
     }
 
 }

@@ -1,7 +1,5 @@
 package produto2;
 
-import produto.Produto;
-
 public class PlacaMae extends Produto {
     private String soquete;
 

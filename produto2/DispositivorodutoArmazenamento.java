@@ -1,7 +1,5 @@
 package produto2;
 
-import produto.Produto;
-
 public class DispositivorodutoArmazenamento extends Produto {
     private String capacidadeDeArmazenamento;
     private String tipoDeConexao;

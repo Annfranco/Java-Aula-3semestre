@@ -115,7 +115,6 @@ function App() {
   }
   return(
     <div>
-      <p>{JSON.stringify(objProduto)}</p>
       <Formulario botao = {btnCadastrar} eventoTeclado = {aoDigitar} cadastrar={cadastrar} obj={objProduto} cancelar={limparFormulario} remover={remover} alterar={alterar}/>
       <Tabela vetor={produtos} selecionar={selecionarProduto}/>
     </div>

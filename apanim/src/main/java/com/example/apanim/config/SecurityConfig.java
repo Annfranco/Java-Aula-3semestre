@@ -15,10 +15,11 @@ public class SecurityConfig {
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+   @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             // 1. Desabilita o CSRF, pois estamos criando uma API REST
@@ -29,25 +30,24 @@ public class SecurityConfig {
             
             // 3. Define as regras de autorização
             .authorizeHttpRequests(authorize -> authorize
+                // Permite TODAS as requisições (GET, POST, PUT, DELETE) para /animais e /usuarios
+                .requestMatchers(HttpMethod.POST, "/animais/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/animais/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/animais/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/animais/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
                 
-                // LIBERA AS ROTAS DE CADASTRO/LISTAGEM/CRUD (POST, GET, PUT, DELETE)
-                .requestMatchers(
-                    "/animais/**", 
-                    "/animalPerdido/**",        // Singular (do seu Controller)
-                    "/animais-perdidos/**",     // Plural (para robustez)
-                    "/usuarios/**", 
-                    "/animalCompra/**", 
-                    "/vendedor/**",
-                    "/h2-console/**"            // H2 Console também liberado aqui
-                ).permitAll()
+                // Habilita o console do H2 (se você estiver usando)
+                .requestMatchers("/h2-console/**").permitAll()
                 
-                // Para qualquer OUTRA requisição, exige autenticação
+                // Para qualquer OUTRA requisição, exige autenticação (opcional por enquanto)
                 .anyRequest().authenticated()
             );
 
-        // Permite que o H2 Console seja exibido em frames
+        // Permite que o H2 Console seja exibido em frames (necessário para o console)
         http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
 
         return http.build();
     }
+
+   
 }

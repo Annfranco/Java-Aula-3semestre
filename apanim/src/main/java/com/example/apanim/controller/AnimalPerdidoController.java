@@ -30,6 +30,15 @@ public class AnimalPerdidoController {
         this.animalPerdidoService = animalPerdidoService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<AnimalPerdidoResponseDTO>> listarTodos() {
+        List<AnimalPerdidoResponseDTO> lista = animalPerdidoService.listarAnimaisPerdidos();
+        if (lista.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(lista);
+    }
+
     @PostMapping
     public ResponseEntity<AnimalPerdidoResponseDTO> cadastrar(
             @Valid @RequestBody AnimalPerdidoCadastroDTO dto) {
@@ -40,15 +49,6 @@ public class AnimalPerdidoController {
         AnimalPerdidoResponseDTO responseDTO = animalPerdidoService.toDTO(animalSalvo);
         
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<AnimalPerdidoResponseDTO>> listarTodos() {
-        List<AnimalPerdidoResponseDTO> lista = animalPerdidoService.listarTodosAnimais();
-        if (lista.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(lista);
     }
     
     @PutMapping("/{id}")

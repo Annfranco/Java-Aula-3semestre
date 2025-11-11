@@ -3,15 +3,13 @@ package com.example.apanim.model;
 import com.example.apanim.Enum.FaixaEtariaAnimal;
 import com.example.apanim.Enum.SexoAnimal;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "tab-animais")
+@Table(name = "tab_animais")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class AnimalModel {
 
@@ -19,49 +17,37 @@ public class AnimalModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private String nome;
 
     @Enumerated(EnumType.STRING)
     private FaixaEtariaAnimal faixaEtariaAnimal;
 
     private String raca;
-
     private String porte;
 
     @Enumerated(EnumType.STRING)
     private SexoAnimal sexoAnimal;
 
     private String especie;
-
-    private Boolean condicaoEspecial;
-
+    private String condicaoEspecial;
     private String logradouro;
-
     private String bairro;
-
     private String cor;
-
-    @NotNull
     private Boolean vacinado;
-
-    @NotNull
     private Boolean vermifugado;
-
-    @NotNull
     private Boolean castrado;
 
     @Lob
     private String resumo;
 
-    @ManyToOne(fetch = FetchType.LAZY) 
-    @JoinColumn(name = "usuario_id", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private UsuarioModel usuario;
 
     public AnimalModel() {
     }
 
-    public AnimalModel(Long id, String nome, FaixaEtariaAnimal faixaEtariaAnimal, String raca, String porte, SexoAnimal sexoAnimal, String especie, Boolean condicaoEspecial, String logradouro, String bairro, String cor, Boolean vacinado, Boolean vermifugado, Boolean castrado, String resumo) {
+    public AnimalModel(Long id, String nome, FaixaEtariaAnimal faixaEtariaAnimal, String raca, String porte, SexoAnimal sexoAnimal, String especie, String condicaoEspecial, String logradouro, String bairro, String cor, Boolean vacinado, Boolean vermifugado, Boolean castrado, String resumo) {
         this.id = id;
         this.nome = nome;
         this.faixaEtariaAnimal = faixaEtariaAnimal;

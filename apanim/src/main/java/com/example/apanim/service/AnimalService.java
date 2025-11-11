@@ -2,8 +2,6 @@ package com.example.apanim.service;
 
 import com.example.apanim.DTO.AnimalCadastroDTO;
 import com.example.apanim.DTO.AnimalResponseDTO;
-import com.example.apanim.DTO.UsuarioCadastroDTO;
-import com.example.apanim.DTO.UsuarioResponseDTO;
 import com.example.apanim.model.AnimalModel;
 import com.example.apanim.model.UsuarioModel;
 import com.example.apanim.repository.AnimalRepository;
@@ -14,7 +12,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AnimalService {
@@ -42,7 +39,7 @@ public class AnimalService {
         animalModel.setPorte(dto.getPorte());
         animalModel.setSexoAnimal(dto.getSexoAnimal());
         animalModel.setEspecie(dto.getEspecie());
-        animalModel.setCondicaoEspecial(dto.isCondicaoEspecial());
+        animalModel.setCondicaoEspecial(dto.getCondicaoEspecial());
         animalModel.setLogradouro(dto.getLogradouro());
         animalModel.setBairro(dto.getBairro());
         animalModel.setCor(dto.getCor());
@@ -109,7 +106,7 @@ public class AnimalService {
         animalModel.setPorte(dto.getPorte());
         animalModel.setSexoAnimal(dto.getSexoAnimal());
         animalModel.setEspecie(dto.getEspecie());
-        animalModel.setCondicaoEspecial(dto.isCondicaoEspecial());
+        animalModel.setCondicaoEspecial(dto.getCondicaoEspecial());
         animalModel.setLogradouro(dto.getLogradouro());
         animalModel.setBairro(dto.getBairro());
         animalModel.setCor(dto.getCor());

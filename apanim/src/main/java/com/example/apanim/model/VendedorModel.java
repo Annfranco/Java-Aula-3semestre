@@ -4,7 +4,7 @@ import com.example.apanim.Enum.Sexo;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tab-vendedor")
+@Table(name = "tab_vendedor")
 public class VendedorModel {
 
     @Id
@@ -33,7 +33,9 @@ public class VendedorModel {
     private String senha;
 
     private String cep;
+
     private String logradouro;
+
     private String bairro;
 
     public VendedorModel() {

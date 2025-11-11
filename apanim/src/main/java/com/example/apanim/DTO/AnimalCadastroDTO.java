@@ -31,7 +31,7 @@ public class AnimalCadastroDTO {
     @NotBlank(message = "A espécie é obrigatório.")
     private String especie;
 
-    @NotNull
+    @NotBlank
     private String condicaoEspecial;
 
     private String logradouro;
@@ -42,9 +42,15 @@ public class AnimalCadastroDTO {
     @NotBlank
     private String cor;
 
+    @NotNull
     private boolean vacinado;
+
+    @NotNull
     private boolean vermifugado;
+
+    @NotNull
     private boolean castrado;
+    
     private String resumo;
 
     @NotNull 

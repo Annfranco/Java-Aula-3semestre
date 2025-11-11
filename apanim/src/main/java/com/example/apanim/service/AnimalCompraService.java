@@ -1,138 +1,133 @@
 package com.example.apanim.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.example.apanim.DTO.AnimalCompraCadastroDTO;
 import com.example.apanim.DTO.AnimalCompraResponseDTO;
 import com.example.apanim.model.AnimalCompra;
 import com.example.apanim.model.VendedorModel;
 import com.example.apanim.repository.AnimalCompraRepository;
 import com.example.apanim.repository.VendedorRepository;
+
 import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class AnimalCompraService {
+   private final AnimalCompraRepository animalCompraRepository;
+   private final VendedorRepository vendedorRepository;
 
-    private final AnimalCompraRepository animalCompraRepository;
-    private final VendedorRepository vendedorRepository;
-
-    public AnimalCompraService(AnimalCompraRepository animalCompraRepository,
-                               VendedorRepository vendedorRepository) {
-        this.animalCompraRepository = animalCompraRepository;
-        this.vendedorRepository = vendedorRepository;
+    public AnimalCompraService(AnimalCompraRepository animalCompraRepository, VendedorRepository vendedorRepository) {
+         this.animalCompraRepository = animalCompraRepository;
+         this.vendedorRepository = vendedorRepository;
     }
 
-    public AnimalCompra salvar(AnimalCompraCadastroDTO dto, Long vendedorId) {
-        
+    public AnimalCompra salvarAnimalCompra(AnimalCompraCadastroDTO dto, Long vendedorId) {
         animalCompraRepository.findByNomeAndVendedorId(dto.getNome(), vendedorId)
-            .ifPresent(u -> {
-                throw new IllegalArgumentException("Você já cadastrou um animal à venda com este nome.");
+            .ifPresent(animal -> {
+                throw new IllegalArgumentException("Animal com esse nome já cadastrado para este vendedor.");
             });
 
-        VendedorModel dono = vendedorRepository.findById(vendedorId)
-            .orElseThrow(() -> new IllegalArgumentException("Vendedor não encontrado."));
+        VendedorModel vendedor = vendedorRepository.findById(vendedorId)
+            .orElseThrow(() -> new IllegalArgumentException("Vendedor não encontrado"));
 
-        AnimalCompra animal = new AnimalCompra();
-        animal.setNome(dto.getNome());
-        animal.setFaixaEtariaAnimal(dto.getFaixaEtariaAnimal());
-        animal.setRaca(dto.getRaca());
-        animal.setPorte(dto.getPorte());
-        animal.setSexoAnimal(dto.getSexoAnimal());
-        animal.setEspecie(dto.getEspecie());
-        animal.setCondicaoEspecial(dto.getCondicaoEspecial());
-        animal.setLogradouro(dto.getLogradouro());
-        animal.setBairro(dto.getBairro());
-        animal.setCor(dto.getCor());
-        animal.setVacinado(dto.isVacinado());
-        animal.setVermifugado(dto.isVermifugado());
-        animal.setCastrado(dto.isCastrado());
-        animal.setResumo(dto.getResumo());
+        AnimalCompra animalCompra = new AnimalCompra();
+        animalCompra.setNome(dto.getNome());
+        animalCompra.setFaixaEtariaAnimal(dto.getFaixaEtariaAnimal());
+        animalCompra.setRaca(dto.getRaca());
+        animalCompra.setPorte(dto.getPorte());
+        animalCompra.setSexoAnimal(dto.getSexoAnimal());
+        animalCompra.setEspecie(dto.getEspecie());
+        animalCompra.setCondicaoEspecial(dto.getCondicaoEspecial());
+        animalCompra.setLogradouro(dto.getLogradouro());
+        animalCompra.setBairro(dto.getBairro());
+        animalCompra.setCor(dto.getCor());
+        animalCompra.setVacinado(dto.getVacinado());
+        animalCompra.setVermifugado(dto.getVermifugado());
+        animalCompra.setCastrado(dto.getCastrado());
+        animalCompra.setResumo(dto.getResumo());
+        animalCompra.setVendedor(vendedor);
+        animalCompra.setPedigree(dto.getPedigree());
+        animalCompra.setValorDoAnimal(dto.getValorDoAnimal());
 
-        animal.setVendedor(dono);
-
-        animal.setPedigree(dto.getPedigree());
-        animal.setValorDoAnimal(dto.getValorDoAnimal());
-
-        return animalCompraRepository.save(animal);
+        return animalCompraRepository.save(animalCompra);
     }
 
-    public List<AnimalCompraResponseDTO> listarTodos() {
-        return animalCompraRepository.findAll()
-                .stream()
-                .map(this::toDTO)
-                .toList();
+    public List<AnimalCompraResponseDTO> listarAnimaisCompra() {
+        return animalCompraRepository
+            .findAll()
+            .stream()
+            .map(this::toDTO)
+            .toList();
     }
 
-    private AnimalCompraResponseDTO toDTO(AnimalCompra compra) {
-        Long vendedorId = (compra.getVendedor() != null) ? compra.getVendedor().getId() : null;
-
-        Long usuarioIdBase = (compra.getUsuario() != null) ? compra.getUsuario().getId() : null;
-        
+    public AnimalCompraResponseDTO toDTO(AnimalCompra animalCompra) {
         return new AnimalCompraResponseDTO(
-            compra.getId(),
-            compra.getNome(),
-            compra.getFaixaEtariaAnimal(),
-            compra.getRaca(),
-            compra.getPorte(),
-            compra.getSexoAnimal(),
-            compra.getEspecie(),
-            compra.getCondicaoEspecial(),
-            compra.getLogradouro(),
-            compra.getBairro(),
-            compra.getCor(),
-            compra.getVacinado(),
-            compra.getVermifugado(),
-            compra.getCastrado(),
-            compra.getResumo(),
-            vendedorId,
-            compra.getPedigree(),
-            compra.getValorDoAnimal()
+            animalCompra.getId(),
+            animalCompra.getNome(),
+            animalCompra.getFaixaEtariaAnimal(),
+            animalCompra.getRaca(),
+            animalCompra.getPorte(),
+            animalCompra.getSexoAnimal(),
+            animalCompra.getEspecie(),
+            animalCompra.getCondicaoEspecial(),
+            animalCompra.getLogradouro(),
+            animalCompra.getBairro(),
+            animalCompra.getCor(),
+            animalCompra.getVacinado(),
+            animalCompra.getVermifugado(),
+            animalCompra.getCastrado(),
+            animalCompra.getResumo(),
+            animalCompra.getVendedor().getId(),
+            animalCompra.getPedigree(),
+            animalCompra.getValorDoAnimal()
         );
     }
-    
-   
-    @Transactional
-    public AnimalCompra atualizar(Long id, AnimalCompraCadastroDTO dto) {
-        AnimalCompra animal = animalCompraRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Animal não encontrado."));
 
-        if (!animal.getNome().equals(dto.getNome())) {
+    @Transactional
+    public AnimalCompra atualizarAnimalCompra(Long id, AnimalCompraCadastroDTO dto) {
+        AnimalCompra animalCompra = animalCompraRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Animal não encontrado"));
+
+        if (!animalCompra.getNome().equals(dto.getNome())) {
+            animalCompraRepository.findByNomeAndVendedorId(dto.getNome(), dto.getVendedorId())
+                .ifPresent(u -> {
+                    throw new IllegalArgumentException("Animal com esse nome já cadastrado para este vendedor.");
+                });
+        }
+
+        if (!animalCompra.getNome().equals(dto.getNome())) {
             animalCompraRepository.findByNomeAndVendedorId(dto.getNome(), dto.getVendedorId())
                 .ifPresent(u -> {
                     throw new IllegalArgumentException("Você já cadastrou um animal com este novo nome.");
                 });
         }
 
-        if (!animal.getVendedor().getId().equals(dto.getVendedorId())) {
-            VendedorModel novoDono = vendedorRepository.findById(dto.getVendedorId())
-                    .orElseThrow(() -> new IllegalArgumentException("Novo usuário (dono) não encontrado."));
-            animal.setVendedor(novoDono);
-        }
+        animalCompra.setNome(dto.getNome());
+        animalCompra.setFaixaEtariaAnimal(dto.getFaixaEtariaAnimal());
+        animalCompra.setRaca(dto.getRaca());
+        animalCompra.setPorte(dto.getPorte());
+        animalCompra.setSexoAnimal(dto.getSexoAnimal());
+        animalCompra.setEspecie(dto.getEspecie());
+        animalCompra.setCondicaoEspecial(dto.getCondicaoEspecial());
+        animalCompra.setLogradouro(dto.getLogradouro());
+        animalCompra.setBairro(dto.getBairro());
+        animalCompra.setCor(dto.getCor());
+        animalCompra.setVacinado(dto.getVacinado());
+        animalCompra.setVermifugado(dto.getVermifugado());
+        animalCompra.setCastrado(dto.getCastrado());
+        animalCompra.setResumo(dto.getResumo());
+        animalCompra.setPedigree(dto.getPedigree());
+        animalCompra.setValorDoAnimal(dto.getValorDoAnimal());
 
-        animal.setNome(dto.getNome());
-        animal.setFaixaEtariaAnimal(dto.getFaixaEtariaAnimal());
-        animal.setRaca(dto.getRaca());
-        animal.setPorte(dto.getPorte());
-        animal.setSexoAnimal(dto.getSexoAnimal());
-        animal.setEspecie(dto.getEspecie());
-        animal.setCondicaoEspecial(dto.getCondicaoEspecial());
-        animal.setLogradouro(dto.getLogradouro());
-        animal.setBairro(dto.getBairro());
-        animal.setCor(dto.getCor());
-        animal.setVacinado(dto.isVacinado());
-        animal.setVermifugado(dto.isVermifugado());
-        animal.setCastrado(dto.isCastrado());
-        animal.setResumo(dto.getResumo());
-
-        animal.setPedigree(dto.getPedigree());
-        animal.setValorDoAnimal(dto.getValorDoAnimal());
-
-        return animalCompraRepository.save(animal);
+        return animalCompraRepository.save(animalCompra);
     }
 
-    public void excluir(Long id) {
-        AnimalCompra animal = animalCompraRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Animal não encontrado."));
-        animalCompraRepository.delete(animal);
+    public void excluirAnimalCompra(long id) {
+        AnimalCompra animalCompra = animalCompraRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Animal não encontrado."));
+        animalCompraRepository.delete(animalCompra);
     }
+
 }

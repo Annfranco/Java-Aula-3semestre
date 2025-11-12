@@ -31,10 +31,10 @@ public class SecurityConfig {
             // 3. Define as regras de autorização
             .authorizeHttpRequests(authorize -> authorize
                 // Permite TODAS as requisições (GET, POST, PUT, DELETE) para /animais e /usuarios
-                .requestMatchers(HttpMethod.POST, "/animais/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/animais/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
-                .requestMatchers(HttpMethod.PUT, "/animais/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/animais/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/animailAdocao/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/animailAdocao/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/animailAdocao/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/animailAdocao/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
                 
                 // Habilita o console do H2 (se você estiver usando)
                 .requestMatchers("/h2-console/**").permitAll()

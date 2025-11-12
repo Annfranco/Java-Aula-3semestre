@@ -9,7 +9,6 @@ import com.example.apanim.DTO.AnimalPerdidoResponseDTO;
 import com.example.apanim.model.AnimalPerdido;
 import com.example.apanim.model.UsuarioModel;
 import com.example.apanim.repository.AnimalPerdidoRepository;
-import com.example.apanim.repository.AnimalAdocaoRepository;
 import com.example.apanim.repository.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
@@ -17,13 +16,13 @@ import lombok.Getter;
 
 @Getter
 @Service
-public class AnimalPerdidoService extends AnimalAdocaoService {
+public class AnimalPerdidoService {
     private final AnimalPerdidoRepository animalPerdidoRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public AnimalPerdidoService(AnimalAdocaoRepository animalRepository, UsuarioRepository usuarioRepository,
-            AnimalPerdidoRepository animalPerdidoRepository) {
-        super(animalRepository, usuarioRepository);
+    public AnimalPerdidoService(AnimalPerdidoRepository animalPerdidoRepository, UsuarioRepository usuarioRepository) {
         this.animalPerdidoRepository = animalPerdidoRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Transactional
@@ -44,7 +43,6 @@ public class AnimalPerdidoService extends AnimalAdocaoService {
         animalPerdido.setSexoAnimal(dto.getSexoAnimal());
         animalPerdido.setEspecie(dto.getEspecie());
         animalPerdido.setCondicaoEspecial(dto.getCondicaoEspecial());
-        animalPerdido.setLogradouro(dto.getLogradouro());
         animalPerdido.setBairro(dto.getBairro());
         animalPerdido.setCor(dto.getCor());
         animalPerdido.setVacinado(dto.isVacinado());
@@ -55,7 +53,6 @@ public class AnimalPerdidoService extends AnimalAdocaoService {
         animalPerdido.setData(dto.getData());
         animalPerdido.setLocalDaUltimaAparicao(dto.getLocalDaUltimaAparicao());
         animalPerdido.setContato(dto.getContato());
-
 
         animalPerdido.setUsuario(dono);
 
@@ -80,7 +77,6 @@ public class AnimalPerdidoService extends AnimalAdocaoService {
             animalPerdido.getSexoAnimal(), 
             animalPerdido.getEspecie(), 
             animalPerdido.getCondicaoEspecial(),  
-            animalPerdido.getLogradouro(), 
             animalPerdido.getBairro(), 
             animalPerdido.getCor(), 
             animalPerdido.getVacinado(), 
@@ -113,7 +109,6 @@ public class AnimalPerdidoService extends AnimalAdocaoService {
         animalPerdido.setSexoAnimal(dto.getSexoAnimal());
         animalPerdido.setEspecie(dto.getEspecie());
         animalPerdido.setCondicaoEspecial(dto.getCondicaoEspecial());
-        animalPerdido.setLogradouro(dto.getLogradouro());
         animalPerdido.setBairro(dto.getBairro());
         animalPerdido.setCor(dto.getCor());
         animalPerdido.setVacinado(dto.isVacinado());

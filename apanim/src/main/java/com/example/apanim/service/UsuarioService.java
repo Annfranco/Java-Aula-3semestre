@@ -23,11 +23,12 @@ public class UsuarioService {
     public UsuarioModel salvarUsuario(UsuarioCadastroDTO dto) {
         usuarioRepository.findByEmail(dto.getEmail())
                 .ifPresent(u -> {
-                    throw new IllegalArgumentException("CPF já cadastrado.");
+                    throw new IllegalArgumentException("E-mail já cadastrado.");
                 });
 
         UsuarioModel usuario = new UsuarioModel();
         usuario.setNome(dto.getNome());
+        usuario.setSexo(dto.getSexo());
         usuario.setCpf(dto.getCpf());
         usuario.setTelefone(dto.getTelefone());
         usuario.setEmail(dto.getEmail());
@@ -48,7 +49,17 @@ public class UsuarioService {
     }
 
     public UsuarioResponseDTO toDTO(UsuarioModel usuario) {
-        return new UsuarioResponseDTO(usuario.getNome(), usuario.getCpf(), usuario.getTelefone(), usuario.getEmail(), usuario.getSenha(), usuario.getCep(), usuario.getLogradouro(), usuario.getBairro());
+        return new UsuarioResponseDTO(
+            usuario.getId(),
+            usuario.getNome(),
+            usuario.getSexo(),
+            usuario.getCpf(),
+            usuario.getTelefone(),
+            usuario.getEmail(),
+            usuario.getCep(),
+            usuario.getLogradouro(),
+            usuario.getBairro()
+        );
     }
 
     @Transactional
@@ -57,6 +68,7 @@ public class UsuarioService {
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
 
         usuario.setNome(dto.getNome());
+        usuario.setSexo(dto.getSexo());
         usuario.setCpf(dto.getCpf());
         usuario.setTelefone(dto.getTelefone());
         usuario.setEmail(dto.getEmail());

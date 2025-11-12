@@ -7,44 +7,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AnimalAdocaoResponseDTO {
-    private Long id;
-    private String nome;
-    private FaixaEtariaAnimal faixaEtariaAnimal;
-    private String raca;
-    private String porte;
-    private SexoAnimal sexoAnimal;
-    private String especie;
-    private String condicaoEspecial;
-    private String logradouro;
-    private String bairro;
-    private String cor;
-    private boolean vacinado;
-    private boolean vermifugado;
-    private boolean castrado;
-    private String resumo;
-    private Long usuarioId;
+public class AnimalAdocaoResponseDTO extends AnimalResponseDTO {
 
     public AnimalAdocaoResponseDTO() {
     }
 
-    public AnimalAdocaoResponseDTO(Long id, String nome, FaixaEtariaAnimal faixaEtariaAnimal, String raca, String porte, SexoAnimal sexoAnimal, String especie, String condicaoEspecial, String logradouro, String bairro, String cor, boolean vacinado, boolean vermifugado, boolean castrado, String resumo, Long usuarioId) {
-        this.id = id;
-        this.nome = nome;
-        this.faixaEtariaAnimal = faixaEtariaAnimal;
-        this.raca = raca;
-        this.porte = porte;
-        this.sexoAnimal = sexoAnimal;
-        this.especie = especie;
-        this.condicaoEspecial = condicaoEspecial;
-        this.logradouro = logradouro;
-        this.bairro = bairro;
-        this.cor = cor;
-        this.vacinado = vacinado;
-        this.vermifugado = vermifugado;
-        this.castrado = castrado;
-        this.resumo = resumo;
-        this.usuarioId = usuarioId;
+    public AnimalAdocaoResponseDTO(Long id, String nome, FaixaEtariaAnimal faixaEtariaAnimal, String raca, String porte, SexoAnimal sexoAnimal, String especie, String condicaoEspecial, String bairro, String cor, boolean vacinado, boolean vermifugado, boolean castrado, String resumo, Long usuarioId) {
+        super(id, nome, faixaEtariaAnimal, raca, porte, sexoAnimal, especie, condicaoEspecial, bairro, cor, vacinado, vermifugado, castrado, resumo, usuarioId);
     }
 
 }

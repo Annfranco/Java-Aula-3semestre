@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AnimalPerdidoCadastroDTO extends AnimalAdocaoCadastroDTO {
+public class AnimalPerdidoCadastroDTO extends AnimalCadastroDTO {
 
     @NotNull
     private String data;
@@ -24,15 +24,25 @@ public class AnimalPerdidoCadastroDTO extends AnimalAdocaoCadastroDTO {
     public AnimalPerdidoCadastroDTO() {
     }
 
-    public AnimalPerdidoCadastroDTO(Long id, String nome, FaixaEtariaAnimal faixaEtariaAnimal, String raca,
-            String porte, SexoAnimal sexoAnimal, String especie, String condicaoEspecial, String logradouro,
-            String bairro, String cor, boolean vacinado, boolean vermifugado, boolean castrado, String resumo,
-            @NotNull String data, @NotBlank String localDaUltimaAparicao, @NotBlank String contato) {
-        super(id, nome, faixaEtariaAnimal, raca, porte, sexoAnimal, especie, condicaoEspecial, logradouro, bairro, cor,
-                vacinado, vermifugado, castrado, resumo);
+    public AnimalPerdidoCadastroDTO(Long id, @NotBlank(message = "O nome é obrigatório.") String nome,
+            @NotNull(message = "A Faixa Etária é obrigatório.") FaixaEtariaAnimal faixaEtariaAnimal,
+            @NotBlank(message = "A raça é obrigatório.") String raca,
+            @NotBlank(message = "O porte é obrigatório.") String porte,
+            @NotNull(message = "O sexo é obrigatório.") SexoAnimal sexoAnimal,
+            @NotBlank(message = "A espécie é obrigatório.") String especie, @NotBlank String condicaoEspecial,
+            @NotBlank(message = "O bairro é obrigatório.") String bairro, @NotBlank String cor,
+            @NotNull boolean vacinado, @NotNull boolean vermifugado, @NotNull boolean castrado, String resumo,
+            @NotNull Long usuarioId, @NotNull String data, @NotBlank String localDaUltimaAparicao,
+            @NotBlank String contato) {
+        super(id, nome, faixaEtariaAnimal, raca, porte, sexoAnimal, especie, condicaoEspecial, bairro, cor, vacinado,
+                vermifugado, castrado, resumo, usuarioId);
         this.data = data;
         this.localDaUltimaAparicao = localDaUltimaAparicao;
         this.contato = contato;
     }
+
+   
+
+    
 
 }

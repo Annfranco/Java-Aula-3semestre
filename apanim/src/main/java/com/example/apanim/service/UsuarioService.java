@@ -30,11 +30,15 @@ public class UsuarioService {
         usuario.setNome(dto.getNome());
         usuario.setSexo(dto.getSexo());
         usuario.setCpf(dto.getCpf());
-        usuario.setTelefone(dto.getTelefone());
+
+        if (dto.getTelefones() == null || dto.getTelefones().isEmpty()) {
+            throw new IllegalArgumentException("A lista de telefones não pode ser nula ou vazia.");
+        }
+        usuario.setTelefones(dto.getTelefones());
+
         usuario.setEmail(dto.getEmail());
         usuario.setSenha(bCryptPasswordEncoder.encode(dto.getSenha()));
         usuario.setCep(dto.getCep());
-        usuario.setLogradouro(dto.getLogradouro());
         usuario.setBairro(dto.getBairro());
 
         return usuarioRepository.save(usuario);
@@ -54,10 +58,9 @@ public class UsuarioService {
             usuario.getNome(),
             usuario.getSexo(),
             usuario.getCpf(),
-            usuario.getTelefone(),
+            usuario.getTelefones(),
             usuario.getEmail(),
             usuario.getCep(),
-            usuario.getLogradouro(),
             usuario.getBairro()
         );
     }
@@ -70,11 +73,15 @@ public class UsuarioService {
         usuario.setNome(dto.getNome());
         usuario.setSexo(dto.getSexo());
         usuario.setCpf(dto.getCpf());
-        usuario.setTelefone(dto.getTelefone());
+
+        if (dto.getTelefones() == null || dto.getTelefones().isEmpty()) {
+            throw new IllegalArgumentException("A lista de telefones não pode ser nula ou vazia.");
+        }
+        usuario.setTelefones(dto.getTelefones());
+        
         usuario.setEmail(dto.getEmail());
         usuario.setSenha(bCryptPasswordEncoder.encode(dto.getSenha()));
         usuario.setCep(dto.getCep());
-        usuario.setLogradouro(dto.getLogradouro());
         usuario.setBairro(dto.getBairro());
 
         return usuarioRepository.save(usuario);
@@ -83,7 +90,10 @@ public class UsuarioService {
     public void excluir(String email) {
         UsuarioModel usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
-        usuarioRepository.delete(usuario);
+        
+        if (usuario != null) {
+            usuarioRepository.delete(usuario);
+        }
     }
 
 

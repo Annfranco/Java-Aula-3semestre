@@ -2,9 +2,9 @@ package com.example.apanim.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -15,39 +15,32 @@ public class SecurityConfig {
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
-
         return new BCryptPasswordEncoder();
     }
 
-   @Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            // 1. Desabilita o CSRF, pois estamos criando uma API REST
-            .csrf(csrf -> csrf.disable())
+            .csrf(AbstractHttpConfigurer::disable) 
             
-            // 2. Torna a sessão "stateless" (não guarda estado), padrão para APIs REST
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             
-            // 3. Define as regras de autorização
             .authorizeHttpRequests(authorize -> authorize
-                // Permite TODAS as requisições (GET, POST, PUT, DELETE) para /animais e /usuarios
-                .requestMatchers(HttpMethod.POST, "/animailAdocao/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/animailAdocao/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
-                .requestMatchers(HttpMethod.PUT, "/animailAdocao/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/animailAdocao/**", "/animalPerdido/**", "/usuarios/**", "/animalCompra/**", "/vendedor/**").permitAll()
                 
-                // Habilita o console do H2 (se você estiver usando)
-                .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/usuarios/**").permitAll()
+                .requestMatchers("/animalPerdido/**").permitAll() 
+                .requestMatchers("/animalAdocao/**").permitAll()
+                .requestMatchers("/animalCompra/**").permitAll()
+                .requestMatchers("/vendedor/**").permitAll()
+                .requestMatchers("/assinaturas/**").permitAll() 
+                .requestMatchers("/planos/**").permitAll() 
+                .requestMatchers("/boosts/**").permitAll() 
+
+                .requestMatchers("/webhook/**").permitAll()
                 
-                // Para qualquer OUTRA requisição, exige autenticação (opcional por enquanto)
                 .anyRequest().authenticated()
             );
 
-        // Permite que o H2 Console seja exibido em frames (necessário para o console)
-        http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
-
         return http.build();
     }
-
-   
 }

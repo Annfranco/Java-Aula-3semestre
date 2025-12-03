@@ -1,6 +1,7 @@
 package com.example.apanim.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,15 +41,12 @@ public class AnimalPerdidoController {
     }
 
     @PostMapping
-    public ResponseEntity<AnimalPerdidoResponseDTO> cadastrar(
-            @Valid @RequestBody AnimalPerdidoCadastroDTO dto) {
-        
-        Long usuarioId = dto.getUsuarioId(); 
+    public ResponseEntity<Map<String, Object>> salvar(@Valid @RequestBody AnimalPerdidoCadastroDTO dto) {
+        animalPerdidoService.salvarAnimalPerdido(dto, dto.getUsuarioId());
 
-        AnimalPerdido animalSalvo = animalPerdidoService.salvarAnimalPerdido(dto, usuarioId);
-        AnimalPerdidoResponseDTO responseDTO = animalPerdidoService.toDTO(animalSalvo);
-        
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(Map.of("mensagem", "Animal cadastrado com sucesso."));
     }
     
     @PutMapping("/{id}")
@@ -63,8 +61,8 @@ public class AnimalPerdidoController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+    public ResponseEntity<Map<String, Object>> excluir(@PathVariable Long id) {
         animalPerdidoService.excluir(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(Map.of("mensagem", "Animal perdido excluído com sucesso."));
     }
 }

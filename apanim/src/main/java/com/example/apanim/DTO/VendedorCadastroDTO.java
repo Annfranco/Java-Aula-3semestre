@@ -1,5 +1,7 @@
 package com.example.apanim.DTO;
 
+import java.util.List;
+
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,8 +22,8 @@ public class VendedorCadastroDTO {
     @NotNull
     private Integer idade;
 
-    @NotBlank(message = "O telefone é obrigatório.")
-    private String telefone;
+    @NotEmpty(message = "É obrigatório cadastrar pelo menos um telefone.")
+    private List<String> telefones;
 
     @NotBlank(message = "O e-mail é obrigatório.")
     @Email(message = "Deve ser um email válido.")
@@ -42,7 +44,7 @@ public class VendedorCadastroDTO {
 
     public VendedorCadastroDTO(Long id, @NotBlank(message = "O nome é obrigatório.") String nome,
             @NotBlank(message = "O CPF é obrigatório.") String cpf, String cnpj, @NotNull Integer idade,
-            @NotBlank(message = "O telefone é obrigatório.") String telefone,
+            @NotEmpty(message = "É obrigatório cadastrar pelo menos um telefone.") List<String> telefones,
             @NotBlank(message = "O e-mail é obrigatório.") @Email(message = "Deve ser um email válido.") String email,
             @NotBlank(message = "Senha é obrigatório.") String senha,
             @NotBlank(message = "O CEP é obrigatório.") String cep, String logradouro, String bairro) {
@@ -51,7 +53,7 @@ public class VendedorCadastroDTO {
         this.cpf = cpf;
         this.cnpj = cnpj;
         this.idade = idade;
-        this.telefone = telefone;
+        this.telefones = telefones;
         this.email = email;
         this.senha = senha;
         this.cep = cep;
@@ -59,4 +61,5 @@ public class VendedorCadastroDTO {
         this.bairro = bairro;
     }
 
+    
 }

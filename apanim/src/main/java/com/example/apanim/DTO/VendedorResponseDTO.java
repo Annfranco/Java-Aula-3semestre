@@ -1,5 +1,7 @@
 package com.example.apanim.DTO;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +13,7 @@ public class VendedorResponseDTO {
     private String cpf;
     private String cnpj;
     private Integer idade;
-    private String telefone;
+    private List<String> telefones;
     private String email;
     private String cep;
     private String logradouro;
@@ -20,14 +22,14 @@ public class VendedorResponseDTO {
     public VendedorResponseDTO() {
     }
 
-    public VendedorResponseDTO(Long id, String nome, String cpf, String cnpj, Integer idade, String telefone,
+    public VendedorResponseDTO(Long id, String nome, String cpf, String cnpj, Integer idade, List<String> telefones,
             String email, String cep, String logradouro, String bairro) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.cnpj = cnpj;
         this.idade = idade;
-        this.telefone = telefone;
+        this.telefones = telefones;
         this.email = email;
         this.cep = cep;
         this.logradouro = logradouro;

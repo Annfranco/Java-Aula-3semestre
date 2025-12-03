@@ -1,9 +1,12 @@
 package com.example.apanim.DTO;
 
+import java.util.List;
+
 import com.example.apanim.Enum.Sexo;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,8 +23,8 @@ public class UsuarioCadastroDTO {
     @NotBlank(message = "O CPF é obrigatório.")
     private String cpf;
 
-    @NotBlank(message = "O telefone é obrigatório.")
-    private String telefone;
+    @NotEmpty(message = "É obrigatórrio cadastrar pelo menos um telefone.")
+    private List<String> telefones;
 
     @NotBlank(message = "O e-mail é obrigatório.")
     @Email(message = "Deve ser um e-mail válido.")
@@ -33,7 +36,6 @@ public class UsuarioCadastroDTO {
     @NotBlank(message = "O CEP é obrigatório.")
     private String cep;
 
-    private String logradouro;
     private String bairro;
 
     public UsuarioCadastroDTO() {
@@ -41,19 +43,18 @@ public class UsuarioCadastroDTO {
 
     public UsuarioCadastroDTO(Long id, @NotBlank(message = "O nome é obrigatório.") String nome, Sexo sexo,
             @NotBlank(message = "O CPF é obrigatório.") String cpf,
-            @NotBlank(message = "O telefone é obrigatório.") String telefone,
+            @NotEmpty(message = "É obrigatórrio cadastrar pelo menos um telefone.") List<String> telefones,
             @NotBlank(message = "O e-mail é obrigatório.") @Email(message = "Deve ser um e-mail válido.") String email,
             @NotBlank(message = "A senha é obrigatório.") String senha,
-            @NotBlank(message = "O CEP é obrigatório.") String cep, String logradouro, String bairro) {
+            @NotBlank(message = "O CEP é obrigatório.") String cep, String bairro) {
         this.id = id;
         this.nome = nome;
         this.sexo = sexo;
         this.cpf = cpf;
-        this.telefone = telefone;
+        this.telefones = telefones;
         this.email = email;
         this.senha = senha;
         this.cep = cep;
-        this.logradouro = logradouro;
         this.bairro = bairro;
     }
 

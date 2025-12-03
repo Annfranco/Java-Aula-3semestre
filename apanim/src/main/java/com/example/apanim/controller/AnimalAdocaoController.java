@@ -32,7 +32,7 @@ public class AnimalAdocaoController {
     
     @PostMapping
     public ResponseEntity<Map<String, Object>> salvar(@Valid @RequestBody AnimalAdocaoCadastroDTO dto) {
-        animalAdocaoService.salvarAnimalAdocao/*(dto, usuarioId)*/(dto, dto.getUsuarioId());
+        animalAdocaoService.salvarAnimalAdocao(dto, dto.getUsuarioId());
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
